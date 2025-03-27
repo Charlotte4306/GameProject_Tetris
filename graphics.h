@@ -5,6 +5,7 @@
 struct Graphics {
 	SDL_Renderer* renderer;
 	SDL_Window* window;
+	TTF_Font* font;
 	void logErrorAndExit(const char*, const char*);
 	SDL_Texture* loadTexture(const char*);
 	TTF_Font* loadFont(const char*, int);
@@ -15,7 +16,6 @@ struct Graphics {
 	void prepareScene(SDL_Texture*);
 	void blitRect(SDL_Texture*, SDL_Rect*, int, int);
 	void renderTexture(SDL_Texture* , int, int);
-	void drawGrid(SDL_Renderer*);
 	void quit();
 };
 

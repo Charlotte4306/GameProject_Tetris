@@ -17,7 +17,7 @@ SDL_Texture* Graphics::loadTexture(const char* filename) {
 void Graphics::init() {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		logErrorAndExit("SDL_Init", SDL_GetError());
-	window = SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("TETRIS", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	if (window == nullptr)
 		logErrorAndExit("CreateWindow", SDL_GetError());
 	if (!IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG))
@@ -29,7 +29,7 @@ void Graphics::init() {
 	if (renderer == nullptr)
 		logErrorAndExit("CreateRenderer", SDL_GetError());
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-	SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+	//SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 	if (TTF_Init() == -1) {
 		logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ", TTF_GetError());
 	}
@@ -71,19 +71,6 @@ void Graphics::quit() {
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 
-}
-void Graphics::drawGrid(SDL_Renderer* renderer) {
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);  
-	SDL_Rect gridRect = { GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT };
-	SDL_RenderDrawRect(renderer, &gridRect);
-
-	int cellSize = 30;
-	for (int i = 0; i <= GRID_WIDTH; i += cellSize) {
-		SDL_RenderDrawLine(renderer, GRID_X + i, GRID_Y, GRID_X + i, GRID_Y + GRID_HEIGHT);
-	}
-	for (int j = 0; j <= GRID_HEIGHT; j += cellSize) {
-		SDL_RenderDrawLine(renderer, GRID_X, GRID_Y + j, GRID_X + GRID_WIDTH, GRID_Y + j);
-	}
 }
 TTF_Font* Graphics::loadFont(const char* path, int size)
 {

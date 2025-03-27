@@ -1,4 +1,6 @@
 ﻿  graphics.cpp
+  grid.cpp
   main.cpp
+  menu.cpp
   Generating Code...
   GameProject_TetrisByMe.vcxproj -> C:\GameSDL\GameProject_TetrisByMe\x64\Debug\GameProject_TetrisByMe.exe

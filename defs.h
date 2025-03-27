@@ -1,14 +1,19 @@
-#ifndef _DEFS_H
+﻿#ifndef _DEFS_H
 #define _DEFS_H
-const char* WINDOW_TITLE = "TETRIS";
-const int SCREEN_WIDTH = 1100;
-const int SCREEN_HEIGHT = 700;
-const int GRID_WIDTH = 300;
-const int GRID_HEIGHT = 500;
+const int SCREEN_WIDTH = 2560;
+const int SCREEN_HEIGHT = 1600;
+const int CELL_SIZE = 60;     
+const int GRID_COLS = 10;      
+const int GRID_ROWS = 20;      
+const int GRID_WIDTH = GRID_COLS * CELL_SIZE;
+const int GRID_HEIGHT = GRID_ROWS * CELL_SIZE;
 const int GRID_X = (SCREEN_WIDTH - GRID_WIDTH) / 2;
 const int GRID_Y = (SCREEN_HEIGHT - GRID_HEIGHT) / 2;
-const int GRID_ROWS = 20;
-const int GRID_COLS = 10;
-const int CELL_SIZE = 30;
-//const char* BACKGROUND = "Background/PIC1.JPG";
+const int PANEL_WIDTH = 6 * CELL_SIZE; 
+const int PANEL_HEIGHT = 6 * CELL_SIZE;
+const int HOLD_X = GRID_X - PANEL_WIDTH - 20;
+const int HOLD_Y = GRID_Y;
+const int NEXT_X = GRID_X + GRID_WIDTH + 20;
+const int NEXT_Y = GRID_Y;
+
 #endif _DEFS_H
