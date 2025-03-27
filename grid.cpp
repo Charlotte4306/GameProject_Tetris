@@ -1,7 +1,16 @@
 ﻿#include "grid.h"
 #include "defs.h"
 #include <SDL_ttf.h>
-void drawGrid(SDL_Renderer* renderer) {
+
+Grid::Grid() {
+    for (int i = 0; i < GRID_ROWS; i++) {
+        for (int j = 0; j < GRID_COLS; j++) {
+            grid[i][j] = 0;
+        }
+    }
+}
+
+void Grid::drawGrid(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
     SDL_Rect gridBackground = { GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT };
     SDL_RenderFillRect(renderer, &gridBackground);
@@ -17,7 +26,7 @@ void drawGrid(SDL_Renderer* renderer) {
     }
 }
 
-void drawPanel(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int width, int height, const char* text) {
+void Grid::drawPanel(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int width, int height, const char* text) {
     SDL_Color white = { 255, 255, 255, 255 };
     SDL_Color black = { 0, 0, 0, 255 };
     SDL_Rect labelBorder = { x - 3, y - 3, width + 6, CELL_SIZE + 6 };
@@ -48,19 +57,15 @@ void drawPanel(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int width, 
 //void drawText(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int width, const char* text, SDL_Color color) {
 //    SDL_Surface* surface = TTF_RenderText_Solid(font, text, color);
 //    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-//
-//    // Đặt chữ gần mép trên nhưng vẫn trong panel (ví dụ: cách 5px từ mép trên)
 //    int text_x = x + (width - surface->w) / 2;
-//    int text_y = y + 5; // Đẩy chữ lên sát mép trên
-//
+//    int text_y = y + 5;
 //    SDL_Rect textRect = { text_x, text_y, surface->w, surface->h };
 //    SDL_RenderCopy(renderer, texture, NULL, &textRect);
-//
 //    SDL_FreeSurface(surface);
 //    SDL_DestroyTexture(texture);
 //}
 
-void drawUI(SDL_Renderer* renderer, TTF_Font* font) {
+void Grid::drawUI(SDL_Renderer* renderer, TTF_Font* font) {
     drawPanel(renderer, font, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, "HOLD");
     int nextPanelHeight = PANEL_HEIGHT + 360;
     drawPanel(renderer, font, NEXT_X, NEXT_Y, PANEL_WIDTH, nextPanelHeight, "NEXT");

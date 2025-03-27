@@ -132,14 +132,18 @@
   <ItemGroup>
     <ClCompile Include="grid.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="logic.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="menu.h" />
+    <ClCompile Include="tetromino.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="grid.h" />
     <ClInclude Include="defs.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="logic.h" />
+    <ClInclude Include="tetromino.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
