@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
     graphics.init();
     SDL_Texture* background = graphics.loadTexture("Background/PIC2.JPG");
     
-    TTF_Font* font = graphics.loadFont("Fonts/Disney.ttf", 24);
+    TTF_Font* font = graphics.loadFont("Fonts/Courier.ttf", 50);
     SDL_Event e;
     while (true) {
         if (SDL_PollEvent(&e) != 0 && (e.type == SDL_KEYDOWN || e.type == SDL_QUIT))
@@ -18,9 +18,9 @@ int main(int argc, char* argv[]) {
 
         graphics.prepareScene(background);
         drawGrid(graphics.renderer); 
-        drawUI(graphics.renderer); 
+        drawUI(graphics.renderer, font); 
         graphics.presentScene();
-        SDL_Delay(100);
+        SDL_Delay(1000);
     }
     graphics.quit();
 	return 0;
