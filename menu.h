@@ -3,8 +3,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include "graphics.h"
-#include "defs.h"
-#include "tetromino.h"
+
 
 struct Menu {
     Graphics* graphics; 

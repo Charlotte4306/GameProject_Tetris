@@ -1,12 +1,14 @@
 ﻿#include "logic.h"
 #include <cstdlib>
+#include "tetromino.h"
+
 void Logic::initLogic(Logic* logic, Grid* grid) {
     logic->grid = grid;
     logic->currentTetromino = nullptr;
     logic->holdTetromino = nullptr;
     logic->nextIndex = 0;
     logic->lastFallTime = 0;
-    logic->fallDelay = 500; 
+    logic->fallDelay = 500;
     logic->gameOver = false;
     logic->canHold = true;
     for (int i = 0; i < 5; i++) {
@@ -33,10 +35,11 @@ void Logic::spawnTetromino(Logic* logic) {
     logic->currentTetromino = (Game*)malloc(sizeof(Game));
     logic->currentTetromino->type = logic->nextTetrominoes[logic->nextIndex];
     logic->currentTetromino->x = GRID_COLS / 2 - TETROMINO_SIZE / 2;
-    logic->currentTetromino->y = -1; 
+    logic->currentTetromino->y = -1;
+    logic->currentTetromino->rotation = 0; 
     for (int i = 0; i < TETROMINO_SIZE; i++) {
         for (int j = 0; j < TETROMINO_SIZE; j++) {
-            logic->currentTetromino->shape[i][j] = Tetrominoes[logic->currentTetromino->type][i][j];
+            logic->currentTetromino->shape[i][j] = Tetrominoes[logic->currentTetromino->type][logic->currentTetromino->rotation][i][j];
         }
     }
     logic->nextIndex = (logic->nextIndex + 1) % 5;
@@ -46,9 +49,12 @@ void Logic::spawnTetromino(Logic* logic) {
         }
     }
     if (checkCollision(logic, 0, 0)) {
-        logic->gameOver = true;
+        logic->currentTetromino->y--;  
+        if (checkCollision(logic, 0, 0)) {
+            logic->gameOver = true;  
+        }
     }
-    logic->canHold = true; 
+    logic->canHold = true;
 }
 
 bool Logic::checkCollision(Logic* logic, int dx, int dy) {
@@ -57,10 +63,10 @@ bool Logic::checkCollision(Logic* logic, int dx, int dy) {
             if (logic->currentTetromino->shape[i][j]) {
                 int newX = logic->currentTetromino->x + j + dx;
                 int newY = logic->currentTetromino->y + i + dy;
-                if (newX < 0 || newX >= GRID_COLS) {
+                if (newX < 0 || newX >= GRID_WIDTH) {
                     return true;
                 }
-                if (newY >= GRID_ROWS) {
+                if (newY >= GRID_HEIGHT) {
                     return true;
                 }
                 if (newY >= 0 && logic->grid->grid[newY][newX] != 0) {
@@ -71,6 +77,7 @@ bool Logic::checkCollision(Logic* logic, int dx, int dy) {
     }
     return false;
 }
+
 void Logic::moveTetromino(Logic* logic, int dx, int dy) {
     if (!checkCollision(logic, dx, dy)) {
         logic->currentTetromino->x += dx;
@@ -79,15 +86,17 @@ void Logic::moveTetromino(Logic* logic, int dx, int dy) {
 }
 
 void Logic::rotateTetromino(Logic* logic) {
-    int temp[TETROMINO_SIZE][TETROMINO_SIZE];
+    int oldRotation = logic->currentTetromino->rotation;
+    int oldShape[TETROMINO_SIZE][TETROMINO_SIZE];
     for (int i = 0; i < TETROMINO_SIZE; i++) {
         for (int j = 0; j < TETROMINO_SIZE; j++) {
-            temp[i][j] = logic->currentTetromino->shape[TETROMINO_SIZE - 1 - j][i];
+            oldShape[i][j] = logic->currentTetromino->shape[i][j];
         }
     }
+    logic->currentTetromino->rotation = (logic->currentTetromino->rotation + 1) % 4;
     for (int i = 0; i < TETROMINO_SIZE; i++) {
         for (int j = 0; j < TETROMINO_SIZE; j++) {
-            logic->currentTetromino->shape[i][j] = temp[i][j];
+            logic->currentTetromino->shape[i][j] = Tetrominoes[logic->currentTetromino->type][logic->currentTetromino->rotation][i][j];
         }
     }
     if (checkCollision(logic, 0, 0)) {
@@ -104,16 +113,10 @@ void Logic::rotateTetromino(Logic* logic) {
             logic->currentTetromino->x += 2;
         }
         else {
-            for (int k = 0; k < 3; k++) {
-                for (int i = 0; i < TETROMINO_SIZE; i++) {
-                    for (int j = 0; j < TETROMINO_SIZE; j++) {
-                        temp[i][j] = logic->currentTetromino->shape[TETROMINO_SIZE - 1 - j][i];
-                    }
-                }
-                for (int i = 0; i < TETROMINO_SIZE; i++) {
-                    for (int j = 0; j < TETROMINO_SIZE; j++) {
-                        logic->currentTetromino->shape[i][j] = temp[i][j];
-                    }
+            logic->currentTetromino->rotation = oldRotation;
+            for (int i = 0; i < TETROMINO_SIZE; i++) {
+                for (int j = 0; j < TETROMINO_SIZE; j++) {
+                    logic->currentTetromino->shape[i][j] = oldShape[i][j];
                 }
             }
         }
@@ -151,7 +154,7 @@ void Logic::lockTetromino(Logic* logic) {
                 int gridX = logic->currentTetromino->x + j;
                 int gridY = logic->currentTetromino->y + i;
                 if (gridY >= 0) {
-                    logic->grid->grid[gridY][gridX] = logic->currentTetromino->type + 1; 
+                    logic->grid->grid[gridY][gridX] = logic->currentTetromino->type + 1;
                 }
             }
         }
@@ -176,20 +179,22 @@ void Logic::clearLines(Logic* logic) {
             for (int j = 0; j < GRID_COLS; j++) {
                 logic->grid->grid[0][j] = 0;
             }
-            i++; 
+            i--;  
         }
     }
 }
+
 
 void Logic::holdTe(Logic* logic) {
     if (!logic->canHold) return;
 
     if (logic->holdTetromino == nullptr) {
-        logic->holdTetromino = (Game*)malloc(sizeof(Game));
+        logic->holdTetromino = new Game();
         logic->holdTetromino->type = logic->currentTetromino->type;
+        logic->holdTetromino->rotation = 0;
         for (int i = 0; i < TETROMINO_SIZE; i++) {
             for (int j = 0; j < TETROMINO_SIZE; j++) {
-                logic->holdTetromino->shape[i][j] = Tetrominoes[logic->holdTetromino->type][i][j];
+                logic->holdTetromino->shape[i][j] = Tetrominoes[logic->holdTetromino->type][logic->holdTetromino->rotation][i][j];
             }
         }
         spawnTetromino(logic);
@@ -197,19 +202,23 @@ void Logic::holdTe(Logic* logic) {
     else {
         int tempType = logic->holdTetromino->type;
         logic->holdTetromino->type = logic->currentTetromino->type;
+        logic->holdTetromino->rotation = 0;
         logic->currentTetromino->type = tempType;
+        logic->currentTetromino->rotation = 0;
+
         for (int i = 0; i < TETROMINO_SIZE; i++) {
             for (int j = 0; j < TETROMINO_SIZE; j++) {
-                logic->currentTetromino->shape[i][j] = Tetrominoes[logic->currentTetromino->type][i][j];
+                logic->currentTetromino->shape[i][j] = Tetrominoes[logic->currentTetromino->type][logic->currentTetromino->rotation][i][j];
             }
         }
         for (int i = 0; i < TETROMINO_SIZE; i++) {
             for (int j = 0; j < TETROMINO_SIZE; j++) {
-                logic->holdTetromino->shape[i][j] = Tetrominoes[logic->holdTetromino->type][i][j];
+                logic->holdTetromino->shape[i][j] = Tetrominoes[logic->holdTetromino->type][logic->holdTetromino->rotation][i][j];
             }
         }
+
         logic->currentTetromino->x = GRID_COLS / 2 - TETROMINO_SIZE / 2;
-        logic->currentTetromino->y = -1;
+        logic->currentTetromino->y = -1;  
     }
-    logic->canHold = false; 
+    logic->canHold = false;
 }

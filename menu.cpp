@@ -1,7 +1,6 @@
 ﻿#include "menu.h"
-#include <SDL.h>
-#include <SDL_ttf.h>
 #include <SDL_image.h>
+#include "defs.h"
 void Menu::initMenu(Menu* menu, Graphics* graphics, TTF_Font* titleFont, TTF_Font* buttonFont, SDL_Texture* background) {
     menu->graphics = graphics;
     menu->background = background;

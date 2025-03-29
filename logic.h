@@ -8,6 +8,7 @@ struct Game {
 	int type;
 	int x, y;
 	int shape[TETROMINO_SIZE][TETROMINO_SIZE];
+    int rotation;
 };
 struct Logic {
     Grid* grid; 

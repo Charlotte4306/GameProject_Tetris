@@ -83,24 +83,23 @@ int main(int argc, char* argv[]) {
             graphics.prepareScene(background);
             grid.drawGrid(graphics.renderer);
             grid.drawUI(graphics.renderer, font);
+            Game* currentTetromino = logic.currentTetromino;
             for (int i = 0; i < GRID_ROWS; i++) {
                 for (int j = 0; j < GRID_COLS; j++) {
                     if (grid.grid[i][j] != 0) {
-                        drawTetromino(graphics.renderer, grid.grid[i][j] - 1, GRID_X + j * CELL_SIZE, GRID_Y + i * CELL_SIZE, CELL_SIZE);
+                        drawTetromino(graphics.renderer, 0, grid.grid[i][j] - 1, GRID_X + j * CELL_SIZE, GRID_Y + i * CELL_SIZE, CELL_SIZE);
                     }
                 }
             }
-
-            Game* currentTetromino = logic.currentTetromino;
             if (currentTetromino != nullptr) {
-                drawTetromino(graphics.renderer, currentTetromino->type,
+                    drawTetromino(graphics.renderer, currentTetromino->type, currentTetromino->rotation,
                     GRID_X + currentTetromino->x * CELL_SIZE,
                     GRID_Y + currentTetromino->y * CELL_SIZE,
                     CELL_SIZE);
             }
             Game* holdTetromino = logic.holdTetromino;
             if (holdTetromino != nullptr) {
-                drawTetromino(graphics.renderer, holdTetromino->type,
+                drawTetromino(graphics.renderer, holdTetromino->type, 0,
                     HOLD_X + CELL_SIZE, HOLD_Y + 2 * CELL_SIZE, CELL_SIZE / 2);
             }
 
@@ -109,7 +108,7 @@ int main(int argc, char* argv[]) {
             const int NEXT_START_Y = NEXT_Y + CELL_SIZE + 10; 
             for (int i = 0; i < 4; i++) {
                 int nextType = logic.nextTetrominoes[(logic.nextIndex + i) % 5];
-                drawTetromino(graphics.renderer, nextType,
+                drawTetromino(graphics.renderer, nextType, 0,
                     NEXT_X + NEXT_CELL_SIZE, NEXT_START_Y + i * (NEXT_TETROMINO_HEIGHT + 10), NEXT_CELL_SIZE);
             }
 

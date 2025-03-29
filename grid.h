@@ -1,5 +1,4 @@
-﻿
-#ifndef _GRID_H
+﻿#ifndef _GRID_H
 #define _GRID_H
 #include <SDL.h>
 #include <SDL_ttf.h>
