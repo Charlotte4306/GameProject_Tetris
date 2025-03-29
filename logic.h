@@ -12,6 +12,9 @@ struct Game {
 struct Logic {
     Grid* grid; 
     Game* currentTetromino; 
+    Game* holdTetromino; 
+    int nextTetrominoes[5]; 
+    int nextIndex;
     Uint32 lastFallTime; 
     Uint32 fallDelay; 
     void initLogic(Logic*, Grid*);
@@ -24,6 +27,8 @@ struct Logic {
     void dropTetromino(Logic*); 
     void lockTetromino(Logic*);
     void clearLines(Logic*);
+    void holdTe(Logic* logic);
     bool gameOver;
+    bool canHold;
 };
 #endif _LOGIC_H
