@@ -1,6 +1,5 @@
 ﻿#include "grid.h"
-#include "defs.h"
-#include <SDL_ttf.h>
+#include <algorithm>
 
 Grid::Grid() {
     for (int i = 0; i < GRID_ROWS; i++) {
@@ -8,16 +7,18 @@ Grid::Grid() {
             grid[i][j] = 0;
         }
     }
+    hasHeld = false;
+    nextTetrominos.clear();
 }
 
 void Grid::drawGrid(SDL_Renderer* renderer) {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_Rect gridBackground = { GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT };
     SDL_RenderFillRect(renderer, &gridBackground);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_Rect gridBorder = { GRID_X - 2, GRID_Y - 2, GRID_WIDTH + 4, GRID_HEIGHT + 4 };
     SDL_RenderDrawRect(renderer, &gridBorder);
-    SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255); 
+    SDL_SetRenderDrawColor(renderer, 50, 50, 50, 255);
     for (int x = 0; x <= GRID_WIDTH; x += CELL_SIZE) {
         SDL_RenderDrawLine(renderer, GRID_X + x, GRID_Y, GRID_X + x, GRID_Y + GRID_HEIGHT);
     }
@@ -38,7 +39,7 @@ void Grid::drawPanel(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int w
     SDL_Surface* textSurface = TTF_RenderText_Solid(font, text, black);
     SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
     int text_x = x + (width - textSurface->w) / 2;
-    int text_y = y + (CELL_SIZE - textSurface->h) / 2; 
+    int text_y = y + (CELL_SIZE - textSurface->h) / 2;
     SDL_Rect textRect = { text_x, text_y, textSurface->w, textSurface->h };
     SDL_RenderCopy(renderer, textTexture, NULL, &textRect);
     SDL_FreeSurface(textSurface);
@@ -49,12 +50,36 @@ void Grid::drawPanel(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int w
     SDL_Rect border = { x - 3, y + CELL_SIZE - 3, width + 6, height + 6 };
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     SDL_RenderFillRect(renderer, &border);
-    SDL_Rect innerRect = { x + 1, y + CELL_SIZE + 1, width - 2, height - 2 }; 
+    SDL_Rect innerRect = { x + 1, y + CELL_SIZE + 1, width - 2, height - 2 };
     SDL_SetRenderDrawColor(renderer, black.r, black.g, black.b, black.a);
     SDL_RenderFillRect(renderer, &innerRect);
 }
+
 void Grid::drawUI(SDL_Renderer* renderer, TTF_Font* font) {
     drawPanel(renderer, font, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, "HOLD");
-    int nextPanelHeight = PANEL_HEIGHT + 360;
+    int nextPanelHeight = PANEL_HEIGHT + 360; // Chiều cao đủ để chứa 4 khối
     drawPanel(renderer, font, NEXT_X, NEXT_Y, PANEL_WIDTH, nextPanelHeight, "NEXT");
+
+    // Vẽ khối trong khung HOLD
+    if (hasHeld) {
+        heldTetromino.drawInHold(renderer, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, CELL_SIZE);
+    }
+
+    // Vẽ các khối trong khung NEXT
+    for (size_t i = 0; i < nextTetrominos.size(); i++) {
+        nextTetrominos[i].drawInNext(renderer, NEXT_X, NEXT_Y, PANEL_WIDTH, nextPanelHeight, CELL_SIZE, i);
+    }
+}
+
+void Grid::drawTetrimino(SDL_Renderer* renderer, Tetromino& tetromino) {
+    tetromino.drawTetromino(renderer, GRID_X, GRID_Y, CELL_SIZE);
+    for (int i = 0; i < GRID_ROWS; i++) {
+        for (int j = 0; j < GRID_COLS; j++) {
+            if (grid[i][j]) {
+                int x = GRID_X + j * CELL_SIZE;
+                int y = GRID_Y + i * CELL_SIZE;
+                Tetromino::drawBlock(renderer, x, y, CELL_SIZE, grid[i][j] - 1);
+            }
+        }
+    }
 }

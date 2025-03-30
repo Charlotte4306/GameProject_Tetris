@@ -1,7 +1,8 @@
 ﻿#ifndef _DEFS_H
 #define _DEFS_H
-const int SCREEN_WIDTH = 2560;
-const int SCREEN_HEIGHT = 1600;
+#include <windows.h>
+const int SCREEN_WIDTH = GetSystemMetrics(SM_CXSCREEN);
+const int SCREEN_HEIGHT = GetSystemMetrics(SM_CYSCREEN);
 const int CELL_SIZE = 60;     
 const int GRID_COLS = 10;      
 const int GRID_ROWS = 20;      

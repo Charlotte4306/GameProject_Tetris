@@ -1,35 +1,17 @@
-﻿#ifndef _LOGIC_H
-#define _LOGIC_H
+﻿#ifndef LOGIC_H_
+#define LOGIC_H_
 #include <SDL.h>
-#include "grid.h"
 #include "defs.h"
 #include "tetromino.h"
-struct Game {
-	int type;
-	int x, y;
-	int shape[TETROMINO_SIZE][TETROMINO_SIZE];
-    int rotation;
-};
+
 struct Logic {
-    Grid* grid; 
-    Game* currentTetromino; 
-    Game* holdTetromino; 
-    int nextTetrominoes[5]; 
-    int nextIndex;
-    Uint32 lastFallTime; 
-    Uint32 fallDelay; 
-    void initLogic(Logic*, Grid*);
-    void freeLogic(Logic*);
-    void spawnTetromino(Logic*);
-    bool checkCollision(Logic*, int, int);
-    void moveTetromino(Logic*, int, int);
-    void rotateTetromino(Logic*);
-    void updateLogic(Logic*, Uint32);
-    void dropTetromino(Logic*); 
-    void lockTetromino(Logic*);
-    void clearLines(Logic*);
-    void holdTe(Logic* logic);
-    bool gameOver;
-    bool canHold;
+    static bool isValid(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino);
+    static void move(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, int dx);
+    static void rotateTetrominoClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino);
+    static void rotateTetrominoAntiClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino);
+    static void update(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& newTetrimino);
+    static void checkLines(int grid[GRID_ROWS][GRID_COLS]);
+    static void hardDrop(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& newTetrimino);
 };
-#endif _LOGIC_H
+
+#endif // LOGIC_H_
