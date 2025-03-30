@@ -23,7 +23,6 @@ void Tetromino::initTetromino() {
 }
 
 void Tetromino::nextTetromino(std::vector<Tetromino>& nextTetrominos) {
-    // Nếu danh sách nextTetrominos rỗng, tạo mới 4 khối
     if (nextTetrominos.empty()) {
         for (int i = 0; i < 4; i++) {
             Tetromino next;
@@ -36,12 +35,8 @@ void Tetromino::nextTetromino(std::vector<Tetromino>& nextTetrominos) {
             nextTetrominos.push_back(next);
         }
     }
-
-    // Lấy khối đầu tiên từ danh sách nextTetrominos
     *this = nextTetrominos.front();
     nextTetrominos.erase(nextTetrominos.begin());
-
-    // Thêm một khối mới vào cuối danh sách
     Tetromino next;
     next.type = rand() % 7;
     next.color = next.type + 1;
@@ -113,30 +108,24 @@ void Tetromino::drawTetromino(SDL_Renderer* renderer, int gridX, int gridY, int 
 }
 
 void Tetromino::drawInHold(SDL_Renderer* renderer, int holdX, int holdY, int panelWidth, int panelHeight, int cellSize) {
-    // Tính toán để căn giữa khối trong khung HOLD
-    int blockWidth = 4 * cellSize; // Chiều rộng tối đa của Tetromino (4 ô)
-    int blockHeight = 4 * cellSize; // Chiều cao tối đa của Tetromino (4 ô)
+    int blockWidth = 4 * cellSize; 
+    int blockHeight = 4 * cellSize; 
     int offsetX = holdX + (panelWidth - blockWidth) / 2;
-    int offsetY = holdY + (panelHeight - blockHeight) / 2 + CELL_SIZE; // Cộng thêm CELL_SIZE để dưới nhãn "HOLD"
-
-    // Điều chỉnh vị trí để khối không lệch ra ngoài
+    int offsetY = holdY + (panelHeight - blockHeight) / 2 + CELL_SIZE; 
     for (int i = 0; i < 4; i++) {
-        int x = offsetX + (items[i].x - 1) * cellSize; // Dịch trái 1 ô để căn giữa
+        int x = offsetX + (items[i].x - 1) * cellSize; 
         int y = offsetY + items[i].y * cellSize;
         drawBlock(renderer, x, y, cellSize, color - 1);
     }
 }
 
 void Tetromino::drawInNext(SDL_Renderer* renderer, int nextX, int nextY, int panelWidth, int panelHeight, int cellSize, int index) {
-    // Tính toán vị trí để căn giữa và xếp các khối theo chiều dọc trong khung NEXT
     int blockWidth = 4 * cellSize;
     int blockHeight = 4 * cellSize;
     int offsetX = nextX + (panelWidth - blockWidth) / 2;
-    int offsetY = nextY + CELL_SIZE + index * (blockHeight + 10); // Mỗi khối cách nhau 10px, cộng CELL_SIZE để dưới nhãn "NEXT"
-
-    // Điều chỉnh vị trí để khối không lệch ra ngoài
+    int offsetY = nextY + CELL_SIZE + index * (blockHeight + 10); 
     for (int i = 0; i < 4; i++) {
-        int x = offsetX + (items[i].x - 1) * cellSize; // Dịch trái 1 ô để căn giữa
+        int x = offsetX + (items[i].x - 1) * cellSize; 
         int y = offsetY + items[i].y * cellSize;
         drawBlock(renderer, x, y, cellSize, color - 1);
     }

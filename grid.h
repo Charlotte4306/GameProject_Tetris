@@ -8,9 +8,9 @@
 
 struct Grid {
     int grid[GRID_ROWS][GRID_COLS];
-    Tetromino heldTetromino; // Khối được giữ
-    bool hasHeld; // Biến kiểm tra xem đã có khối được giữ hay chưa
-    std::vector<Tetromino> nextTetrominos; // Danh sách 4 khối tiếp theo
+    Tetromino heldTetromino; 
+    bool hasHeld; 
+    std::vector<Tetromino> nextTetrominos; 
     Grid();
     void drawGrid(SDL_Renderer*);
     void drawUI(SDL_Renderer*, TTF_Font*);

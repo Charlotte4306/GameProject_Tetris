@@ -24,7 +24,7 @@ void Logic::move(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, int dx) {
 
 void Logic::rotateTetrominoClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino) {
     if (tetromino.type == 3) return;
-    Point p = tetromino.items[2]; // Tâm xoay
+    Point p = tetromino.items[2]; 
     for (int i = 0; i < 4; i++) {
         tetromino.backup[i] = tetromino.items[i];
         int x = tetromino.items[i].y - p.y;
@@ -40,13 +40,13 @@ void Logic::rotateTetrominoClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& 
 
 void Logic::rotateTetrominoAntiClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino) {
     if (tetromino.type == 3) return;
-    Point p = tetromino.items[2]; // Tâm xoay
+    Point p = tetromino.items[2]; 
     for (int i = 0; i < 4; i++) {
         tetromino.backup[i] = tetromino.items[i];
         int x = tetromino.items[i].y - p.y;
         int y = tetromino.items[i].x - p.x;
-        tetromino.items[i].x = p.x + x; // Đổi dấu: từ p.x - x thành p.x + x
-        tetromino.items[i].y = p.y - y; // Đổi dấu: từ p.y + y thành p.y - y
+        tetromino.items[i].x = p.x + x; 
+        tetromino.items[i].y = p.y - y; 
     }
     if (!isValid(grid, tetromino)) {
         for (int i = 0; i < 4; i++)
@@ -69,14 +69,12 @@ void Logic::update(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& n
 }
 
 void Logic::hardDrop(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& newTetrimino) {
-    // Tiếp tục di chuyển xuống dưới cho đến khi không thể di chuyển nữa
     while (true) {
         for (int i = 0; i < 4; i++) {
             tetromino.backup[i] = tetromino.items[i];
             tetromino.items[i].y++;
         }
         if (!isValid(grid, tetromino)) {
-            // Nếu không hợp lệ, khôi phục vị trí trước đó và đặt vào lưới
             for (int i = 0; i < 4; i++) {
                 tetromino.items[i] = tetromino.backup[i];
                 if (tetromino.backup[i].y >= 0)

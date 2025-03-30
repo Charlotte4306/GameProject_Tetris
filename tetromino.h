@@ -1,8 +1,8 @@
-﻿#ifndef TETROMINO_H_
-#define TETROMINO_H_
+﻿#ifndef _TETROMINO_H_
+#define _TETROMINO_H_
 #include <SDL.h>
 #include "defs.h"
-#include <vector> // Để dùng std::vector lưu danh sách nextTetrominos
+#include <vector> 
 
 struct Point {
     int x, y;
@@ -19,11 +19,11 @@ struct Tetromino {
     static const int figures[7][4];
 
     void initTetromino();
-    void nextTetromino(std::vector<Tetromino>& nextTetrominos); // Thêm tham số để quản lý danh sách next
+    void nextTetromino(std::vector<Tetromino>& nextTetrominos); 
     void drawTetromino(SDL_Renderer* renderer, int gridX, int gridY, int cellSize);
-    void drawInHold(SDL_Renderer* renderer, int holdX, int holdY, int panelWidth, int panelHeight, int cellSize); // Vẽ trong khung HOLD
-    void drawInNext(SDL_Renderer* renderer, int nextX, int nextY, int panelWidth, int panelHeight, int cellSize, int index); // Vẽ trong khung NEXT
+    void drawInHold(SDL_Renderer* renderer, int holdX, int holdY, int panelWidth, int panelHeight, int cellSize); 
+    void drawInNext(SDL_Renderer* renderer, int nextX, int nextY, int panelWidth, int panelHeight, int cellSize, int index); 
     static void drawBlock(SDL_Renderer* renderer, int x, int y, int cellSize, int colorIndex);
 };
 
-#endif // TETROMINO_H_
+#endif _TETROMINO_H_

@@ -57,15 +57,11 @@ void Grid::drawPanel(SDL_Renderer* renderer, TTF_Font* font, int x, int y, int w
 
 void Grid::drawUI(SDL_Renderer* renderer, TTF_Font* font) {
     drawPanel(renderer, font, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, "HOLD");
-    int nextPanelHeight = PANEL_HEIGHT + 360; // Chiều cao đủ để chứa 4 khối
+    int nextPanelHeight = PANEL_HEIGHT + 360; 
     drawPanel(renderer, font, NEXT_X, NEXT_Y, PANEL_WIDTH, nextPanelHeight, "NEXT");
-
-    // Vẽ khối trong khung HOLD
     if (hasHeld) {
         heldTetromino.drawInHold(renderer, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, CELL_SIZE);
     }
-
-    // Vẽ các khối trong khung NEXT
     for (size_t i = 0; i < nextTetrominos.size(); i++) {
         nextTetrominos[i].drawInNext(renderer, NEXT_X, NEXT_Y, PANEL_WIDTH, nextPanelHeight, CELL_SIZE, i);
     }

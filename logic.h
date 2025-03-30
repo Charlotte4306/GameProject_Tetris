@@ -1,5 +1,5 @@
-﻿#ifndef LOGIC_H_
-#define LOGIC_H_
+﻿#ifndef _LOGIC_H_
+#define _LOGIC_H_
 #include <SDL.h>
 #include "defs.h"
 #include "tetromino.h"
@@ -14,4 +14,4 @@ struct Logic {
     static void hardDrop(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& newTetrimino);
 };
 
-#endif // LOGIC_H_
+#endif _LOGIC_H_

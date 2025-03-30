@@ -32,11 +32,11 @@ int main(int argc, char* argv[]) {
     Tetromino tetromino;
     tetromino.initTetromino();
     bool hardDropTriggered = false;
-    bool holdTriggered = false; // Biến để theo dõi trạng thái hold
-    bool canHold = true; // Biến kiểm tra xem có thể hold trong lượt này không
+    bool holdTriggered = false; 
+    bool canHold = true; 
     tetromino.nextTetromino(grid.nextTetrominos);
     Uint32 lastMoveTime = 0;
-    const Uint32 moveDelay = 100; // Độ trễ giữa các lần di chuyển (ms), giảm để nhanh hơn
+    const Uint32 moveDelay = 100; 
     const Uint32 initialMoveDelay = 200;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -93,43 +93,39 @@ int main(int argc, char* argv[]) {
                 int dx = 0;
                 if (keystate[SDL_SCANCODE_LEFT]) dx = -1;
                 if (keystate[SDL_SCANCODE_RIGHT]) dx = 1;
-
-                // Kiểm tra thời gian để điều khiển độ nhạy
                 Uint32 currentTime = SDL_GetTicks();
                 Uint32 delay = (tetromino.dx == 0) ? initialMoveDelay : moveDelay;
                 if (currentTime - lastMoveTime >= delay) {
                     Logic::move(grid.grid, tetromino, dx);
-                    tetromino.dx = dx; // Lưu dx để biết đang di chuyển
+                    tetromino.dx = dx; 
                     lastMoveTime = currentTime;
                 }
             }
             else {
-                tetromino.dx = 0; // Reset dx khi không nhấn phím
+                tetromino.dx = 0; 
             }
             if (tetromino.rotate) {
                 const Uint8* keystate = SDL_GetKeyboardState(NULL);
                 if (keystate[SDL_SCANCODE_Z]) {
-                    Logic::rotateTetrominoAntiClockwise(grid.grid, tetromino); // Z: Xoay ngược chiều
+                    Logic::rotateTetrominoAntiClockwise(grid.grid, tetromino); 
                 }
                 if (keystate[SDL_SCANCODE_X]) {
-                    Logic::rotateTetrominoClockwise(grid.grid, tetromino);     // X: Xoay theo chiều
+                    Logic::rotateTetrominoClockwise(grid.grid, tetromino);     
                 }
                 tetromino.rotate = false;
             }
             if (holdTriggered && canHold) {
                 if (!grid.hasHeld) {
-                    // Nếu chưa có khối nào trong HOLD, giữ khối hiện tại
                     grid.heldTetromino = tetromino;
                     grid.hasHeld = true;
                     tetromino.nextTetromino(grid.nextTetrominos);
                 }
                 else {
-                    // Nếu đã có khối trong HOLD, hoán đổi
                     Tetromino temp = tetromino;
                     tetromino = grid.heldTetromino;
                     grid.heldTetromino = temp;
                 }
-                canHold = false; // Chỉ được hold 1 lần mỗi lượt
+                canHold = false; 
                 holdTriggered = false;
             }
             if (hardDropTriggered) {
@@ -138,7 +134,7 @@ int main(int argc, char* argv[]) {
                 if (newTetrimino) {
                     Logic::checkLines(grid.grid);
                     tetromino.nextTetromino(grid.nextTetrominos);
-                    canHold = true; // Reset khả năng hold khi khối mới xuất hiện
+                    canHold = true; 
                 }
                 hardDropTriggered = false;
             }
@@ -148,7 +144,7 @@ int main(int argc, char* argv[]) {
                 if (newTetrimino) {
                     Logic::checkLines(grid.grid);
                     tetromino.nextTetromino(grid.nextTetrominos);
-                    canHold = true; // Reset khả năng hold khi khối mới xuất hiện
+                    canHold = true; 
                 }
                 tetromino.startTime = tetromino.currentTime;
             }
