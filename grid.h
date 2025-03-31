@@ -17,7 +17,6 @@ struct Grid {
     void drawUI(SDL_Renderer*, TTF_Font*);
     void drawPanel(SDL_Renderer*, TTF_Font*, int, int, int, int, const char*);
     void drawTetrimino(SDL_Renderer*, Tetromino&);
-    void reset();
 };
 
 #endif _GRID_H

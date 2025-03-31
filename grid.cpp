@@ -1,11 +1,9 @@
 ﻿#include "grid.h"
 #include <algorithm>
 #include <string>
-Grid::Grid(Score& scoreRef) : score(scoreRef) {
-    reset();
-}
 
-void Grid::reset() {
+
+Grid::Grid(Score& scoreRef) : score(scoreRef) {
     for (int i = 0; i < GRID_ROWS; i++) {
         for (int j = 0; j < GRID_COLS; j++) {
             grid[i][j] = 0;
