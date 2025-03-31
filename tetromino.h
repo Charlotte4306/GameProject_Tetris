@@ -24,6 +24,7 @@ struct Tetromino {
     void drawInHold(SDL_Renderer* renderer, int holdX, int holdY, int panelWidth, int panelHeight, int cellSize); 
     void drawInNext(SDL_Renderer* renderer, int nextX, int nextY, int panelWidth, int panelHeight, int cellSize, int index); 
     static void drawBlock(SDL_Renderer* renderer, int x, int y, int cellSize, int colorIndex);
+    void getTetrominoBounds(int& width, int& height, int& minX, int& minY);
 };
 
 #endif _TETROMINO_H_

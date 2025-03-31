@@ -7,6 +7,7 @@
 #include "defs.h"
 #include "menu.h"
 #include "tetromino.h"
+#include "score.h"
 using namespace std;
 
 enum GameState {
@@ -18,12 +19,13 @@ enum GameState {
 int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.init();
-    Grid grid;
+    Score score;
+    Grid grid(score);
     srand(time(0));
     SDL_Texture* background = graphics.loadTexture("Background/PIC2.JPG");
     TTF_Font* titleFont = graphics.loadFont("Fonts/Courier.ttf", 80);
     TTF_Font* buttonFont = graphics.loadFont("Fonts/Courier.ttf", 50);
-    TTF_Font* font = graphics.loadFont("Fonts/Courier.ttf", 60);
+    TTF_Font* font = graphics.loadFont("Fonts/Courier.ttf", 40);
     Menu menu;
     menu.initMenu(&menu, &graphics, titleFont, buttonFont, background);
     GameState state = MENU;
@@ -36,7 +38,7 @@ int main(int argc, char* argv[]) {
     bool canHold = true; 
     tetromino.nextTetromino(grid.nextTetrominos);
     Uint32 lastMoveTime = 0;
-    const Uint32 moveDelay = 100; 
+    const Uint32 moveDelay = 150; 
     const Uint32 initialMoveDelay = 200;
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -48,6 +50,9 @@ int main(int argc, char* argv[]) {
                 if (menu.playClicked) {
                     state = PLAYING;
                     menu.playClicked = false;
+                    score.reset();
+                    grid.reset();
+                    tetromino.nextTetromino(grid.nextTetrominos);
                 }
                 if (menu.settingsClicked) {
                     std::cout << "Settings clicked!" << std::endl;
@@ -74,7 +79,20 @@ int main(int argc, char* argv[]) {
                     }
                 }
                 if (e.type == SDL_KEYUP && (e.key.keysym.sym == SDLK_DOWN)) {
-                    tetromino.delay = 500;
+                    tetromino.delay = score.getDelay(); // Sử dụng delay từ Score
+                }
+            }
+            else if (state == GAME_OVER) {
+                menu.handleGameOverEvents(&menu, &e);
+                if (menu.playAgainClicked) {
+                    state = PLAYING;
+                    menu.playAgainClicked = false;
+                    score.reset();
+                    tetromino.nextTetromino(grid.nextTetrominos);
+                }
+                if (menu.quitClicked) {
+                    quit = true;
+                    menu.quitClicked = false;
                 }
             }
         }
@@ -132,9 +150,15 @@ int main(int argc, char* argv[]) {
                 bool newTetrimino = false;
                 Logic::hardDrop(grid.grid, tetromino, newTetrimino);
                 if (newTetrimino) {
-                    Logic::checkLines(grid.grid);
-                    tetromino.nextTetromino(grid.nextTetrominos);
-                    canHold = true; 
+                    int lines = Logic::checkLines(grid.grid); // Cần sửa Logic::checkLines để trả về số dòng xóa
+                    score.addLines(lines); // Cộng điểm và kiểm tra tăng level
+                    if (!Logic::isValid(grid.grid, tetromino)) {
+                        state = GAME_OVER;
+                    }
+                    else {
+                        tetromino.nextTetromino(grid.nextTetrominos);
+                        canHold = true;
+                    }
                 }
                 hardDropTriggered = false;
             }
@@ -142,13 +166,21 @@ int main(int argc, char* argv[]) {
                 bool newTetrimino = false;
                 Logic::update(grid.grid, tetromino, newTetrimino);
                 if (newTetrimino) {
-                    Logic::checkLines(grid.grid);
-                    tetromino.nextTetromino(grid.nextTetrominos);
-                    canHold = true; 
+                    int lines = Logic::checkLines(grid.grid); 
+                    score.addLines(lines); // Cộng điểm và kiểm tra tăng level
+                    if (!Logic::isValid(grid.grid, tetromino)) {
+                        state = GAME_OVER;
+                    }
+                    else {
+                        tetromino.nextTetromino(grid.nextTetrominos);
+                        canHold = true;
+                    }
                 }
                 tetromino.startTime = tetromino.currentTime;
             }
-
+            else if (state == GAME_OVER) {
+                menu.drawGameOver(&menu, score);
+            }
             grid.drawTetrimino(graphics.renderer, tetromino);
             graphics.presentScene();
         }

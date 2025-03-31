@@ -3,52 +3,60 @@
   "WorkspaceRootPath": "C:\\GameSDL\\GameProject_TetrisByMe\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\logic.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:logic.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:tetromino.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\grid.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:grid.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\grid.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:grid.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:tetromino.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\logic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:logic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\menu.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:menu.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\grid.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:grid.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\logic.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:logic.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\menu.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:menu.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:tetromino.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\score.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:score.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\score.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:score.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:tetromino.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\graphics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:graphics.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\logic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:logic.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:graphics.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|C:\\GameSDL\\GameProject_TetrisByMe\\defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{406490A1-4F02-431C-BF13-0144DC471EBC}|GameProject_TetrisByMe.vcxproj|solutionrelative:defs.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,11 +66,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "graphics.h",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\graphics.h",
               "RelativeDocumentMoniker": "graphics.h",
@@ -75,52 +83,53 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 5,
               "Title": "menu.cpp",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\menu.cpp",
               "RelativeDocumentMoniker": "menu.cpp",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\menu.cpp",
               "RelativeToolTip": "menu.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAA==",
+              "ViewState": "AgIAALcAAAAAAAAAAAAAAAUAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-26T17:18:34.868Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 11,
               "Title": "logic.h",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\logic.h",
               "RelativeDocumentMoniker": "logic.h",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\logic.h",
               "RelativeToolTip": "logic.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-27T15:44:03.231Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "menu.h",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\menu.h",
               "RelativeDocumentMoniker": "menu.h",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\menu.h",
               "RelativeToolTip": "menu.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-26T17:18:14.264Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "main.cpp",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\main.cpp",
               "RelativeDocumentMoniker": "main.cpp",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\main.cpp",
               "RelativeToolTip": "main.cpp",
-              "ViewState": "AgIAAH4AAAAAAAAAAAAAAKAAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAAACEAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-25T19:07:56.59Z",
               "IsPinned": true,
@@ -128,30 +137,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "grid.h",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\grid.h",
               "RelativeDocumentMoniker": "grid.h",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\grid.h",
               "RelativeToolTip": "grid.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-29T19:34:23.364Z",
               "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "logic.cpp",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\logic.cpp",
               "RelativeDocumentMoniker": "logic.cpp",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\logic.cpp",
               "RelativeToolTip": "logic.cpp",
-              "ViewState": "AgIAACcAAAAAAAAAAAAAACMAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAAAGAAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-27T15:44:09.063Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -163,32 +171,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": "grid.cpp",
+              "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\grid.cpp",
+              "RelativeDocumentMoniker": "grid.cpp",
+              "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\grid.cpp",
+              "RelativeToolTip": "grid.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-29T19:52:44.245Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "score.h",
+              "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\score.h",
+              "RelativeDocumentMoniker": "score.h",
+              "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\score.h",
+              "RelativeToolTip": "score.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-03-31T01:40:06.775Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "score.cpp",
+              "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\score.cpp",
+              "RelativeDocumentMoniker": "score.cpp",
+              "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\score.cpp",
+              "RelativeToolTip": "score.cpp",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-31T01:40:15.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "tetromino.cpp",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.cpp",
               "RelativeDocumentMoniker": "tetromino.cpp",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.cpp",
               "RelativeToolTip": "tetromino.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAI4AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAABoAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-27T12:52:58.786Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-27T12:52:58.786Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
               "Title": "tetromino.h",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.h",
               "RelativeDocumentMoniker": "tetromino.h",
               "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\tetromino.h",
               "RelativeToolTip": "tetromino.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-03-27T12:53:08.901Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "defs.h",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\defs.h",
               "RelativeDocumentMoniker": "defs.h",
@@ -200,19 +244,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "grid.cpp",
-              "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\grid.cpp",
-              "RelativeDocumentMoniker": "grid.cpp",
-              "ToolTip": "C:\\GameSDL\\GameProject_TetrisByMe\\grid.cpp",
-              "RelativeToolTip": "grid.cpp",
-              "ViewState": "AgIAACIAAAAAAAAAAAAiwFQAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-03-29T19:52:44.245Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "graphics.cpp",
               "DocumentMoniker": "C:\\GameSDL\\GameProject_TetrisByMe\\graphics.cpp",
               "RelativeDocumentMoniker": "graphics.cpp",

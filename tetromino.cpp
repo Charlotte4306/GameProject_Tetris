@@ -24,7 +24,7 @@ void Tetromino::initTetromino() {
 
 void Tetromino::nextTetromino(std::vector<Tetromino>& nextTetrominos) {
     if (nextTetrominos.empty()) {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             Tetromino next;
             next.type = rand() % 7;
             next.color = next.type + 1;
@@ -45,6 +45,44 @@ void Tetromino::nextTetromino(std::vector<Tetromino>& nextTetrominos) {
         next.items[j].y = figures[next.type][j] / 4;
     }
     nextTetrominos.push_back(next);
+
+    // Dịch chuyển Tetromino hiện tại để căn giữa theo chiều ngang
+    int minX = items[0].x, maxX = items[0].x;
+    for (int i = 1; i < 4; i++) {
+        if (items[i].x < minX) minX = items[i].x;
+        if (items[i].x > maxX) maxX = items[i].x;
+    }
+    int tetrominoWidth = maxX - minX + 1; // Chiều rộng thực tế của Tetromino
+    int offsetX = (GRID_COLS - tetrominoWidth) / 2; // Tính offset để căn giữa
+
+    // Dịch chuyển tất cả các ô của Tetromino
+    for (int i = 0; i < 4; i++) {
+        items[i].x += offsetX;
+    }
+
+    // Đặt lại các giá trị khác
+    dx = 0;
+    rotate = false;
+    delay = 500;
+    startTime = SDL_GetTicks();
+    currentTime = startTime;
+}
+
+void Tetromino::getTetrominoBounds(int& width, int& height, int& minX, int& minY) {
+    minX = items[0].x; int maxX = items[0].x;
+    minY = items[0].y; int maxY = items[0].y;
+
+    // Tìm tọa độ min và max của Tetromino
+    for (int i = 1; i < 4; i++) {
+        if (items[i].x < minX) minX = items[i].x;
+        if (items[i].x > maxX) maxX = items[i].x;
+        if (items[i].y < minY) minY = items[i].y;
+        if (items[i].y > maxY) maxY = items[i].y;
+    }
+
+    // Tính chiều rộng và chiều cao (số ô)
+    width = (maxX - minX + 1) * CELL_SIZE;
+    height = (maxY - minY + 1) * CELL_SIZE;
 }
 
 void Tetromino::drawBlock(SDL_Renderer* renderer, int x, int y, int cellSize, int colorIndex) {
@@ -108,25 +146,37 @@ void Tetromino::drawTetromino(SDL_Renderer* renderer, int gridX, int gridY, int 
 }
 
 void Tetromino::drawInHold(SDL_Renderer* renderer, int holdX, int holdY, int panelWidth, int panelHeight, int cellSize) {
-    int blockWidth = 4 * cellSize; 
-    int blockHeight = 4 * cellSize; 
-    int offsetX = holdX + (panelWidth - blockWidth) / 2;
-    int offsetY = holdY + (panelHeight - blockHeight) / 2 + CELL_SIZE; 
+    // Tính kích thước thực tế và tọa độ nhỏ nhất của Tetromino
+    int tetrominoWidth, tetrominoHeight, minX, minY;
+    getTetrominoBounds(tetrominoWidth, tetrominoHeight, minX, minY);
+
+    // Căn giữa Tetromino trong khung HOLD
+    int offsetX = holdX + (panelWidth - tetrominoWidth) / 2;
+    int offsetY = holdY + CELL_SIZE + (panelHeight - tetrominoHeight) / 2; // Dịch xuống dưới label "HOLD"
+
+    // Vẽ từng ô của Tetromino, điều chỉnh tọa độ dựa trên minX và minY
     for (int i = 0; i < 4; i++) {
-        int x = offsetX + (items[i].x - 1) * cellSize; 
-        int y = offsetY + items[i].y * cellSize;
+        int x = offsetX + (items[i].x - minX) * cellSize;
+        int y = offsetY + (items[i].y - minY) * cellSize;
         drawBlock(renderer, x, y, cellSize, color - 1);
     }
 }
 
 void Tetromino::drawInNext(SDL_Renderer* renderer, int nextX, int nextY, int panelWidth, int panelHeight, int cellSize, int index) {
-    int blockWidth = 4 * cellSize;
-    int blockHeight = 4 * cellSize;
-    int offsetX = nextX + (panelWidth - blockWidth) / 2;
-    int offsetY = nextY + CELL_SIZE + index * (blockHeight + 10); 
+    // Tính kích thước thực tế và tọa độ nhỏ nhất của Tetromino
+    int tetrominoWidth, tetrominoHeight, minX, minY;
+    getTetrominoBounds(tetrominoWidth, tetrominoHeight, minX, minY);
+
+    // Căn giữa Tetromino trong khung NEXT
+    int offsetX = nextX + (panelWidth - tetrominoWidth) / 2;
+    // Mỗi Tetromino chiếm không gian 4 ô theo chiều dọc, cách nhau 10 pixel
+    int blockSpaceHeight = 4 * cellSize;
+    int offsetY = nextY + CELL_SIZE + index * (blockSpaceHeight - 10) + (blockSpaceHeight - tetrominoHeight) / 2;
+
+    // Vẽ từng ô của Tetromino, điều chỉnh tọa độ dựa trên minX và minY
     for (int i = 0; i < 4; i++) {
-        int x = offsetX + (items[i].x - 1) * cellSize; 
-        int y = offsetY + items[i].y * cellSize;
+        int x = offsetX + (items[i].x - minX) * cellSize;
+        int y = offsetY + (items[i].y - minY) * cellSize;
         drawBlock(renderer, x, y, cellSize, color - 1);
     }
 }

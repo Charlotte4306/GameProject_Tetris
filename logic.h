@@ -10,7 +10,7 @@ struct Logic {
     static void rotateTetrominoClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino);
     static void rotateTetrominoAntiClockwise(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino);
     static void update(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& newTetrimino);
-    static void checkLines(int grid[GRID_ROWS][GRID_COLS]);
+    static int checkLines(int grid[GRID_ROWS][GRID_COLS]);
     static void hardDrop(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool& newTetrimino);
 };
 

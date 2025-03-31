@@ -1,7 +1,11 @@
 ﻿#include "grid.h"
 #include <algorithm>
+#include <string>
+Grid::Grid(Score& scoreRef) : score(scoreRef) {
+    reset();
+}
 
-Grid::Grid() {
+void Grid::reset() {
     for (int i = 0; i < GRID_ROWS; i++) {
         for (int j = 0; j < GRID_COLS; j++) {
             grid[i][j] = 0;
@@ -59,6 +63,29 @@ void Grid::drawUI(SDL_Renderer* renderer, TTF_Font* font) {
     drawPanel(renderer, font, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, "HOLD");
     int nextPanelHeight = PANEL_HEIGHT + 360; 
     drawPanel(renderer, font, NEXT_X, NEXT_Y, PANEL_WIDTH, nextPanelHeight, "NEXT");
+    int scorePanelHeight = 3 * CELL_SIZE; 
+    int scorePanelY = HOLD_Y + PANEL_HEIGHT + 20; 
+    drawPanel(renderer, font, HOLD_X, scorePanelY, PANEL_WIDTH, scorePanelHeight, "SCORE");
+    SDL_Color white = { 255, 255, 255, 255 };
+    SDL_Color black = { 0, 0, 0, 255 };
+    std::string scoreText = "Score: " + std::to_string(score.score);
+    SDL_Surface* scoreSurface = TTF_RenderText_Solid(font, scoreText.c_str(), white);
+    SDL_Texture* scoreTexture = SDL_CreateTextureFromSurface(renderer, scoreSurface);
+    int scoreTextX = HOLD_X + (PANEL_WIDTH - scoreSurface->w) / 2;
+    int scoreTextY = scorePanelY + CELL_SIZE + 20; 
+    SDL_Rect scoreRect = { scoreTextX, scoreTextY, scoreSurface->w, scoreSurface->h };
+    SDL_RenderCopy(renderer, scoreTexture, NULL, &scoreRect);
+    SDL_FreeSurface(scoreSurface);
+    SDL_DestroyTexture(scoreTexture);
+    std::string levelText = "Level: " + std::to_string(score.level);
+    SDL_Surface* levelSurface = TTF_RenderText_Solid(font, levelText.c_str(), white);
+    SDL_Texture* levelTexture = SDL_CreateTextureFromSurface(renderer, levelSurface);
+    int levelTextX = HOLD_X + (PANEL_WIDTH - levelSurface->w) / 2;
+    int levelTextY = scorePanelY + CELL_SIZE + 80; 
+    SDL_Rect levelRect = { levelTextX, levelTextY, levelSurface->w, levelSurface->h };
+    SDL_RenderCopy(renderer, levelTexture, NULL, &levelRect);
+    SDL_FreeSurface(levelSurface);
+    SDL_DestroyTexture(levelTexture);
     if (hasHeld) {
         heldTetromino.drawInHold(renderer, HOLD_X, HOLD_Y, PANEL_WIDTH, PANEL_HEIGHT, CELL_SIZE);
     }

@@ -86,8 +86,9 @@ void Logic::hardDrop(int grid[GRID_ROWS][GRID_COLS], Tetromino& tetromino, bool&
     }
 }
 
-void Logic::checkLines(int grid[GRID_ROWS][GRID_COLS]) {
+int Logic::checkLines(int grid[GRID_ROWS][GRID_COLS]) {
     int k = GRID_ROWS - 1;
+    int linesCleared = 0; // Đếm số dòng xóa
     for (int i = GRID_ROWS - 1; i >= 0; i--) {
         int count = 0;
         for (int j = 0; j < GRID_COLS; j++) {
@@ -95,5 +96,7 @@ void Logic::checkLines(int grid[GRID_ROWS][GRID_COLS]) {
             grid[k][j] = grid[i][j];
         }
         if (count < GRID_COLS) k--;
+        else linesCleared++; // Tăng số dòng xóa nếu dòng đầy
     }
+    return linesCleared; // Trả về số dòng đã xóa
 }

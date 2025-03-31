@@ -1,6 +1,7 @@
 ﻿#include "menu.h"
 #include <SDL_image.h>
 #include "defs.h"
+#include "string"
 void Menu::initMenu(Menu* menu, Graphics* graphics, TTF_Font* titleFont, TTF_Font* buttonFont, SDL_Texture* background) {
     menu->graphics = graphics;
     menu->background = background;
@@ -22,6 +23,17 @@ void Menu::initMenu(Menu* menu, Graphics* graphics, TTF_Font* titleFont, TTF_Fon
     menu->playButton = { 0, 0, buttonWidth, buttonHeight };
     menu->settingButton = { 0, 0, buttonWidth, buttonHeight };
     menu->helpButton = { 0, 0, buttonWidth, buttonHeight };
+}
+
+void Menu::initGameOverMenu(Menu* menu, Graphics* graphics, TTF_Font* titleFont, TTF_Font* buttonFont, SDL_Texture* background) {
+    menu->graphics = graphics;
+    menu->background = background;
+    menu->titleFont = titleFont;
+    menu->buttonFont = buttonFont;
+    menu->playAgainButton = { 500, 500, 200, 60 }; 
+    menu->quitButton = { 750, 500, 200, 60 };      
+    menu->playAgainClicked = false;
+    menu->quitClicked = false;
 }
 
 void Menu::drawMenu(Menu* menu) {
@@ -108,7 +120,86 @@ void Menu::handleMenuEvents(Menu* menu, SDL_Event* e) {
         }
     }
 }
+void Menu::handleGameOverEvents(Menu* menu, SDL_Event* e) {
+    if (e->type == SDL_MOUSEBUTTONDOWN) {
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+        if (x >= menu->playAgainButton.x && x <= menu->playAgainButton.x + menu->playAgainButton.w &&
+            y >= menu->playAgainButton.y && y <= menu->playAgainButton.y + menu->playAgainButton.h) {
+            menu->playAgainClicked = true;
+        }
+        if (x >= menu->quitButton.x && x <= menu->quitButton.x + menu->quitButton.w &&
+            y >= menu->quitButton.y && y <= menu->quitButton.y + menu->quitButton.h) {
+            menu->quitClicked = true;
+        }
+    }
+    if (e->type == SDL_KEYDOWN) {
+        switch (e->key.keysym.sym) {
+        case SDLK_r: 
+            menu->playAgainClicked = true;
+            break;
+        case SDLK_ESCAPE: 
+            menu->quitClicked = true;
+            break;
+        }
+    }
+}
+void Menu::drawGameOver(Menu* menu, Score& score) {
+    menu->graphics->prepareScene(menu->background);
 
+    SDL_Color white = { 255, 255, 255, 255 };
+    SDL_Color black = { 0, 0, 0, 255 };
+    SDL_Surface* gameOverSurface = TTF_RenderText_Solid(menu->titleFont, "GAME OVER", white);
+    SDL_Texture* gameOverTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, gameOverSurface);
+    SDL_Rect gameOverRect = { 500, 200, gameOverSurface->w, gameOverSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, gameOverTexture, NULL, &gameOverRect);
+    SDL_FreeSurface(gameOverSurface);
+    SDL_DestroyTexture(gameOverTexture);
+
+    // Vẽ điểm số
+    std::string scoreText = "Score: " + std::to_string(score.score);
+    SDL_Surface* scoreSurface = TTF_RenderText_Solid(menu->buttonFont, scoreText.c_str(), white);
+    SDL_Texture* scoreTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, scoreSurface);
+    SDL_Rect scoreRect = { 500, 300, scoreSurface->w, scoreSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, scoreTexture, NULL, &scoreRect);
+    SDL_FreeSurface(scoreSurface);
+    SDL_DestroyTexture(scoreTexture);
+
+    // Vẽ level
+    std::string levelText = "Level: " + std::to_string(score.level);
+    SDL_Surface* levelSurface = TTF_RenderText_Solid(menu->buttonFont, levelText.c_str(), white);
+    SDL_Texture* levelTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, levelSurface);
+    SDL_Rect levelRect = { 500, 350, levelSurface->w, levelSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, levelTexture, NULL, &levelRect);
+    SDL_FreeSurface(levelSurface);
+    SDL_DestroyTexture(levelTexture);
+
+    // Vẽ nút Play Again
+    SDL_SetRenderDrawColor(menu->graphics->renderer, 0, 255, 0, 255); // Màu xanh lá
+    SDL_RenderFillRect(menu->graphics->renderer, &menu->playAgainButton);
+    SDL_Surface* playAgainSurface = TTF_RenderText_Solid(menu->buttonFont, "Play Again", black);
+    SDL_Texture* playAgainTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, playAgainSurface);
+    SDL_Rect playAgainTextRect = { menu->playAgainButton.x + (menu->playAgainButton.w - playAgainSurface->w) / 2,
+                                  menu->playAgainButton.y + (menu->playAgainButton.h - playAgainSurface->h) / 2,
+                                  playAgainSurface->w, playAgainSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, playAgainTexture, NULL, &playAgainTextRect);
+    SDL_FreeSurface(playAgainSurface);
+    SDL_DestroyTexture(playAgainTexture);
+
+    // Vẽ nút Quit
+    SDL_SetRenderDrawColor(menu->graphics->renderer, 255, 0, 0, 255); // Màu đỏ
+    SDL_RenderFillRect(menu->graphics->renderer, &menu->quitButton);
+    SDL_Surface* quitSurface = TTF_RenderText_Solid(menu->buttonFont, "Quit", black);
+    SDL_Texture* quitTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, quitSurface);
+    SDL_Rect quitTextRect = { menu->quitButton.x + (menu->quitButton.w - quitSurface->w) / 2,
+                             menu->quitButton.y + (menu->quitButton.h - quitSurface->h) / 2,
+                             quitSurface->w, quitSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, quitTexture, NULL, &quitTextRect);
+    SDL_FreeSurface(quitSurface);
+    SDL_DestroyTexture(quitTexture);
+
+    menu->graphics->presentScene();
+}
 void Menu::freeMenu(Menu* menu) {
     if (menu->logoTexture != nullptr) {
         SDL_DestroyTexture(menu->logoTexture);
