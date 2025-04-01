@@ -1,3 +1,2 @@
 ﻿  main.cpp
-C:\GameSDL\GameProject_TetrisByMe\main.cpp(26,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   GameProject_TetrisByMe.vcxproj -> C:\GameSDL\GameProject_TetrisByMe\x64\Debug\GameProject_TetrisByMe.exe

@@ -1,7 +1,5 @@
 ﻿#include "menu.h"
-#include <SDL_image.h>
-#include "defs.h"
-#include "string"
+
 void Menu::initMenu(Menu* menu, Graphics* graphics, TTF_Font* titleFont, TTF_Font* buttonFont, SDL_Texture* background) {
     menu->graphics = graphics;
     menu->background = background;
@@ -121,24 +119,12 @@ void Menu::handleMenuEvents(Menu* menu, SDL_Event* e) {
     }
 }
 void Menu::handleGameOverEvents(Menu* menu, SDL_Event* e) {
-    if (e->type == SDL_MOUSEBUTTONDOWN) {
-        int x, y;
-        SDL_GetMouseState(&x, &y);
-        if (x >= menu->playAgainButton.x && x <= menu->playAgainButton.x + menu->playAgainButton.w &&
-            y >= menu->playAgainButton.y && y <= menu->playAgainButton.y + menu->playAgainButton.h) {
-            menu->playAgainClicked = true;
-        }
-        if (x >= menu->quitButton.x && x <= menu->quitButton.x + menu->quitButton.w &&
-            y >= menu->quitButton.y && y <= menu->quitButton.y + menu->quitButton.h) {
-            menu->quitClicked = true;
-        }
-    }
     if (e->type == SDL_KEYDOWN) {
         switch (e->key.keysym.sym) {
-        case SDLK_r: 
+        case SDLK_r:
             menu->playAgainClicked = true;
             break;
-        case SDLK_ESCAPE: 
+        case SDLK_ESCAPE:
             menu->quitClicked = true;
             break;
         }
@@ -149,6 +135,8 @@ void Menu::drawGameOver(Menu* menu, Score& score) {
 
     SDL_Color white = { 255, 255, 255, 255 };
     SDL_Color black = { 0, 0, 0, 255 };
+
+    // Vẽ tiêu đề "GAME OVER"
     SDL_Surface* gameOverSurface = TTF_RenderText_Solid(menu->titleFont, "GAME OVER", white);
     SDL_Texture* gameOverTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, gameOverSurface);
     SDL_Rect gameOverRect = { 500, 200, gameOverSurface->w, gameOverSurface->h };
@@ -174,27 +162,18 @@ void Menu::drawGameOver(Menu* menu, Score& score) {
     SDL_FreeSurface(levelSurface);
     SDL_DestroyTexture(levelTexture);
 
-    // Vẽ nút Play Again
-    SDL_SetRenderDrawColor(menu->graphics->renderer, 0, 255, 0, 255); // Màu xanh lá
-    SDL_RenderFillRect(menu->graphics->renderer, &menu->playAgainButton);
-    SDL_Surface* playAgainSurface = TTF_RenderText_Solid(menu->buttonFont, "Play Again", black);
+    // Vẽ hướng dẫn phím
+    SDL_Surface* playAgainSurface = TTF_RenderText_Solid(menu->buttonFont, "Press R to Play Again", white);
     SDL_Texture* playAgainTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, playAgainSurface);
-    SDL_Rect playAgainTextRect = { menu->playAgainButton.x + (menu->playAgainButton.w - playAgainSurface->w) / 2,
-                                  menu->playAgainButton.y + (menu->playAgainButton.h - playAgainSurface->h) / 2,
-                                  playAgainSurface->w, playAgainSurface->h };
-    SDL_RenderCopy(menu->graphics->renderer, playAgainTexture, NULL, &playAgainTextRect);
+    SDL_Rect playAgainRect = { 500, 450, playAgainSurface->w, playAgainSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, playAgainTexture, NULL, &playAgainRect);
     SDL_FreeSurface(playAgainSurface);
     SDL_DestroyTexture(playAgainTexture);
 
-    // Vẽ nút Quit
-    SDL_SetRenderDrawColor(menu->graphics->renderer, 255, 0, 0, 255); // Màu đỏ
-    SDL_RenderFillRect(menu->graphics->renderer, &menu->quitButton);
-    SDL_Surface* quitSurface = TTF_RenderText_Solid(menu->buttonFont, "Quit", black);
+    SDL_Surface* quitSurface = TTF_RenderText_Solid(menu->buttonFont, "Press ESC to Quit", white);
     SDL_Texture* quitTexture = SDL_CreateTextureFromSurface(menu->graphics->renderer, quitSurface);
-    SDL_Rect quitTextRect = { menu->quitButton.x + (menu->quitButton.w - quitSurface->w) / 2,
-                             menu->quitButton.y + (menu->quitButton.h - quitSurface->h) / 2,
-                             quitSurface->w, quitSurface->h };
-    SDL_RenderCopy(menu->graphics->renderer, quitTexture, NULL, &quitTextRect);
+    SDL_Rect quitRect = { 500, 500, quitSurface->w, quitSurface->h };
+    SDL_RenderCopy(menu->graphics->renderer, quitTexture, NULL, &quitRect);
     SDL_FreeSurface(quitSurface);
     SDL_DestroyTexture(quitTexture);
 

@@ -12,7 +12,15 @@ Grid::Grid(Score& scoreRef) : score(scoreRef) {
     hasHeld = false;
     nextTetrominos.clear();
 }
-
+void Grid::reset() {
+    for (int i = 0; i < GRID_ROWS; i++) {
+        for (int j = 0; j < GRID_COLS; j++) {
+            grid[i][j] = 0;
+        }
+    }
+    hasHeld = false;
+    nextTetrominos.clear();
+}
 void Grid::drawGrid(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_Rect gridBackground = { GRID_X, GRID_Y, GRID_WIDTH, GRID_HEIGHT };

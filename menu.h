@@ -4,7 +4,10 @@
 #include <SDL_ttf.h>
 #include "graphics.h"
 #include "score.h"
-
+#include <SDL_image.h>
+#include "defs.h"
+#include "string"
+#include "score.h"
 struct Menu {
     Graphics* graphics; 
     SDL_Texture* background; 

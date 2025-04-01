@@ -7,7 +7,8 @@
 #include "defs.h"
 #include "menu.h"
 #include "tetromino.h"
-#include "score.h" 
+#include "score.h"
+#include <vector>
 using namespace std;
 
 enum GameState {
@@ -20,17 +21,44 @@ int main(int argc, char* argv[]) {
     Graphics graphics;
     graphics.init();
 
-    Score score; // Khởi tạo Score trước
-    Grid grid(score); // Truyền Score vào Grid
+    // Tải nhạc cố định cho menu
+    graphics.loadMenuBackgroundMusic();
+    graphics.loadBackgroundMusicList();
 
-    srand(time(0));
-    SDL_Texture* background = graphics.loadTexture("Background/PIC2.JPG");
+    // Hình nền cố định cho menu
+    SDL_Texture* menuBackground = graphics.loadTexture("Background/BG.JPG");
+
+    // Danh sách hình ảnh nền cho phần chơi
+    vector<SDL_Texture*> backgroundList;
+    for (int i = 1; i <= 10; i++) {
+        std::string filePath = "Background/PIC" + std::to_string(i) + ".JPG";
+        SDL_Texture* texture = graphics.loadTexture(filePath.c_str());
+        if (texture != nullptr) {
+            backgroundList.push_back(texture);
+        }
+    }
+
+    // Hình nền và nhạc hiện tại
+    SDL_Texture* currentBackground = menuBackground;
+    int currentMusicIndex = -1; // -1 nghĩa là đang dùng nhạc menu
+    bool isMenuMusicPlaying = false; // Theo dõi trạng thái nhạc menu
+
+    // Phát nhạc menu lần đầu
+    graphics.playMenuBackgroundMusic();
+    isMenuMusicPlaying = true;
+
+    srand(static_cast<unsigned int>(time(0)));
+    Score score;
+    Grid grid(score);
+
     TTF_Font* titleFont = graphics.loadFont("Fonts/Courier.ttf", 80);
     TTF_Font* buttonFont = graphics.loadFont("Fonts/Courier.ttf", 50);
     TTF_Font* font = graphics.loadFont("Fonts/Courier.ttf", 40);
     Menu menu;
-    menu.initMenu(&menu, &graphics, titleFont, buttonFont, background);
+    menu.initMenu(&menu, &graphics, titleFont, buttonFont, menuBackground);
+    menu.initGameOverMenu(&menu, &graphics, titleFont, buttonFont, menuBackground);
     GameState state = MENU;
+    GameState lastState = MENU; // Theo dõi trạng thái trước đó
     SDL_Event e;
     bool quit = false;
     Tetromino tetromino;
@@ -53,8 +81,17 @@ int main(int argc, char* argv[]) {
                 if (menu.playClicked) {
                     state = PLAYING;
                     menu.playClicked = false;
-                    score.reset(); // Reset điểm số khi bắt đầu chơi
+                    score.reset();
+                    grid.reset();
                     tetromino.nextTetromino(grid.nextTetrominos);
+
+                    // Random hình ảnh và nhạc cho phần chơi
+                    if (!backgroundList.empty()) {
+                        currentBackground = backgroundList[rand() % backgroundList.size()];
+                        currentMusicIndex = rand() % 10;
+                        graphics.playBackgroundMusic(currentMusicIndex);
+                        isMenuMusicPlaying = false;
+                    }
                 }
                 if (menu.settingsClicked) {
                     std::cout << "Settings clicked!" << std::endl;
@@ -84,14 +121,48 @@ int main(int argc, char* argv[]) {
                     tetromino.delay = score.getDelay();
                 }
             }
+            else if (state == GAME_OVER) {
+                menu.handleGameOverEvents(&menu, &e);
+                if (menu.playAgainClicked) {
+                    state = PLAYING;
+                    menu.playAgainClicked = false;
+                    score.reset();
+                    grid.reset();
+                    tetromino.nextTetromino(grid.nextTetrominos);
+
+                    // Random hình ảnh và nhạc cho phần chơi
+                    if (!backgroundList.empty()) {
+                        currentBackground = backgroundList[rand() % backgroundList.size()];
+                        currentMusicIndex = rand() % 10;
+                        graphics.playBackgroundMusic(currentMusicIndex);
+                        isMenuMusicPlaying = false;
+                    }
+                }
+                if (menu.quitClicked) {
+                    quit = true;
+                }
+            }
+        }
+
+        // Kiểm tra chuyển trạng thái để phát nhạc
+        if (state != lastState) {
+            if (state == MENU || state == GAME_OVER) {
+                if (!isMenuMusicPlaying) {
+                    currentBackground = menuBackground;
+                    graphics.playMenuBackgroundMusic();
+                    isMenuMusicPlaying = true;
+                }
+            }
+            lastState = state;
         }
 
         if (state == MENU) {
+            currentBackground = menuBackground;
             menu.drawMenu(&menu);
         }
         else if (state == PLAYING) {
             tetromino.currentTime = SDL_GetTicks();
-            graphics.prepareScene(background);
+            graphics.prepareScene(currentBackground);
             grid.drawGrid(graphics.renderer);
             grid.drawUI(graphics.renderer, font);
 
@@ -143,6 +214,9 @@ int main(int argc, char* argv[]) {
                     score.addLines(lines);
                     tetromino.nextTetromino(grid.nextTetrominos);
                     canHold = true;
+                    if (!Logic::isValid(grid.grid, tetromino)) {
+                        state = GAME_OVER;
+                    }
                 }
                 hardDropTriggered = false;
             }
@@ -154,6 +228,9 @@ int main(int argc, char* argv[]) {
                     score.addLines(lines);
                     tetromino.nextTetromino(grid.nextTetrominos);
                     canHold = true;
+                    if (!Logic::isValid(grid.grid, tetromino)) {
+                        state = GAME_OVER;
+                    }
                 }
                 tetromino.startTime = tetromino.currentTime;
             }
@@ -162,9 +239,21 @@ int main(int argc, char* argv[]) {
             grid.drawTetrimino(graphics.renderer, tetromino);
             graphics.presentScene();
         }
+        else if (state == GAME_OVER) {
+            currentBackground = menuBackground;
+            menu.drawGameOver(&menu, score);
+        }
 
         SDL_Delay(16);
     }
+
+    // Giải phóng các texture
+    SDL_DestroyTexture(menuBackground);
+    for (SDL_Texture* texture : backgroundList) {
+        SDL_DestroyTexture(texture);
+    }
+    backgroundList.clear();
+
     menu.freeMenu(&menu);
     graphics.quit();
     return 0;

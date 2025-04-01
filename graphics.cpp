@@ -1,8 +1,6 @@
 ﻿#include "graphics.h"
-#include <SDL_image.h>
-#include <SDL_mixer.h>
-#include <SDL_ttf.h>
 #include "defs.h"
+#include <string>
 void Graphics::logErrorAndExit(const char* msg, const char* error) {
 	SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR, "%s: %s", msg, error);
 	SDL_Quit();
@@ -33,6 +31,8 @@ void Graphics::init() {
 	if (TTF_Init() == -1) {
 		logErrorAndExit("SDL_ttf could not initialize! SDL_ttf Error: ", TTF_GetError());
 	}
+	menuBackgroundMusic = nullptr;
+	currentBackgroundMusic = nullptr;
 }
 //void Graphics::prepareScene() {
 //	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -54,15 +54,6 @@ void Graphics::renderTexture(SDL_Texture* texture, int x, int y) {
 	dest.y = y;
 	SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);
 	SDL_RenderCopy(renderer, texture, NULL, &dest);
-}
-void Graphics::blitRect(SDL_Texture* texture, SDL_Rect* src, int x, int y) {
-	SDL_Rect dest;
-	dest.x = x;
-	dest.y = y;
-	dest.w = src->w;
-	dest.h = src->h;
-	SDL_RenderCopy(renderer, texture, src, &dest);
-
 }
 void Graphics::quit() {
 	IMG_Quit();
@@ -95,4 +86,73 @@ SDL_Texture* Graphics::renderText(const char* text, TTF_Font* font, SDL_Color te
 
 	SDL_FreeSurface(textSurface);
 	return texture;
+}
+
+void Graphics::loadMenuBackgroundMusic() {
+	menuBackgroundMusic = Mix_LoadMUS("Sound/BGM.mp3");
+	if (menuBackgroundMusic == nullptr) {
+		SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+			"Failed to load menu background music: %s", Mix_GetError());
+	}
+	else {
+		SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO,
+			"Successfully loaded menu background music");
+	}
+}
+
+void Graphics::loadBackgroundMusicList() {
+	for (int i = 1; i <= 10; i++) {
+		std::string filePath = "Sound/Sound" + std::to_string(i) + ".mp3";
+		Mix_Music* music = Mix_LoadMUS(filePath.c_str());
+		if (music == nullptr) {
+			SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+				"Failed to load background music %s: %s", filePath.c_str(), Mix_GetError());
+		}
+		else {
+			backgroundMusicList.push_back(music);
+			SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO,
+				"Successfully loaded background music: %s", filePath.c_str());
+		}
+	}
+}
+
+void Graphics::playMenuBackgroundMusic() {
+	stopBackgroundMusic();
+	if (menuBackgroundMusic != nullptr) {
+		Mix_VolumeMusic(MIX_MAX_VOLUME);
+		if (Mix_PlayMusic(menuBackgroundMusic, -1) == -1) {
+			SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+				"Failed to play menu background music: %s", Mix_GetError());
+		}
+		else {
+			SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO,
+				"Playing menu background music...");
+		}
+	}
+}
+
+void Graphics::playBackgroundMusic(int index) {
+	if (index >= 0 && index < backgroundMusicList.size()) {
+		stopBackgroundMusic();
+		currentBackgroundMusic = backgroundMusicList[index];
+		if (currentBackgroundMusic != nullptr) {
+			Mix_VolumeMusic(MIX_MAX_VOLUME);
+			if (Mix_PlayMusic(currentBackgroundMusic, -1) == -1) {
+				SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+					"Failed to play background music: %s", Mix_GetError());
+			}
+			else {
+				SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO,
+					"Playing background music %d...", index + 1);
+			}
+		}
+	}
+	else {
+		SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_ERROR,
+			"Invalid background music index: %d", index);
+	}
+}
+
+void Graphics::stopBackgroundMusic() {
+	Mix_HaltMusic();
 }

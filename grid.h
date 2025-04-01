@@ -13,6 +13,7 @@ struct Grid {
     Score& score;
     std::vector<Tetromino> nextTetrominos; 
     Grid(Score& score);
+    void reset();
     void drawGrid(SDL_Renderer*);
     void drawUI(SDL_Renderer*, TTF_Font*);
     void drawPanel(SDL_Renderer*, TTF_Font*, int, int, int, int, const char*);
